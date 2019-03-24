@@ -6,7 +6,7 @@ const Input = (props) => {
             <span className="title">
                 {props.title ? props.title : props.name} = {props.value}
             </span><br/>
-            <input type="text" value={props.value} {...props} />
+            <input type={props.type} value={props.value} {...props} />
         </div>
     )
 };
