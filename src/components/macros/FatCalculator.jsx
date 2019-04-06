@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { MetricsContext, MetricsConsumer } from '../context/MetricsContext';
 
-export default class ProteinsCalculator extends Component {
+export default class FatCalculator extends Component {
     constructor(props) {
         super(props);
     }
@@ -13,7 +13,7 @@ export default class ProteinsCalculator extends Component {
     //         proteinAmount,
     //         calculateMacroCalories
     //     } = this.context
-    //     calculateMacroCalories(targetWeight, proteinAmount, 4);
+    //     calculateMacroCalories(targetWeight, proteinAmount, 9);
     // }
 
     render() {
@@ -21,15 +21,15 @@ export default class ProteinsCalculator extends Component {
             <MetricsConsumer>
                 {(context) => (
                     <div>
-                        <button onClick={() => context.calculateMacroCalories('proteinCalories', context.targetWeight, context.proteinAmount, 4)}>
-                            Calculate Protein Calories:
+                        <button onClick={() => context.calculateMacroCalories('fatCalories', context.targetWeight, context.fatAmount, 9)}>
+                            Calculate Fat Calories:
                         </button>
                         <div>
-                            <div>Protein Calories</div>
-                            <div>{context.proteinCalories}</div>
+                            <div>Fat Calories</div>
+                            <div>{context.fatCalories}</div>
                         </div>
                     </div>
-                    
+
                 )}
 
             </MetricsConsumer>
@@ -37,4 +37,4 @@ export default class ProteinsCalculator extends Component {
     }
 }
 
-ProteinsCalculator.contextType = MetricsContext;
+FatCalculator.contextType = MetricsContext;

@@ -19,25 +19,28 @@ export default class InputContainer extends Component {
             targetWeight: '0',
             totalCalories: '0',
             proteinCalories: '0',
+            fatAmount: '0',
             fatCalories: '0',
-            proteinAmount: '0'
+            proteinAmount: '0',
+            carbCalories: '0'
         }
         this.setInputMetrics = this.setInputMetrics.bind(this);
         this.occupationOptions = this.occupationOptions.bind(this);
         this.handleOccupation = this.handleOccupation.bind(this);
+        this.handleFatAmount = this.handleFatAmount.bind(this);
         this.handleProteinAmount = this.handleProteinAmount.bind(this);
         this.calculateTotalCalories = this.calculateTotalCalories.bind(this);
         this.calculateMacroCalories = this.calculateMacroCalories.bind(this);
     }
 
-    calculateMacroCalories(targetWeight, proteinAmount, macroMultiplier) {
-        const minimumProtein = 120;
+    calculateMacroCalories(caloriesType, targetWeight, macroAmount, macroMultiplier) {
+        const minimumProtein = caloriesType === 'proteinCalories' ? 120 : 0;
         const tw = parseInt(targetWeight);
-        const pd = parseFloat(proteinAmount);
+        const pd = parseFloat(macroAmount);
         const mm = parseInt(macroMultiplier);
-        const proteinGrams = tw * pd > minimumProtein ? tw*pd : minimumProtein;
-        const proteinCalories = proteinGrams * mm;
-        this.setState({proteinCalories: proteinCalories});
+        const macroGrams = tw * pd > minimumProtein ? tw*pd : minimumProtein;
+        const macroCalories = macroGrams * mm;
+        this.setState({[caloriesType]: macroCalories});
     }
 
     calculateTotalCalories(targetBodyWeight, occupationHours, workoutHours) {
@@ -54,6 +57,10 @@ export default class InputContainer extends Component {
 
     handleProteinAmount(event){
         this.setState({proteinAmount: event.target.value})
+    }
+
+    handleFatAmount(event){
+        this.setState({fatAmount: event.target.value})
     }
 
     setInputMetrics(e) {
@@ -85,8 +92,10 @@ export default class InputContainer extends Component {
                     calculateMacroCalories: this.calculateMacroCalories,
                     totalCalories: this.state.totalCalories,
                     proteinCalories: this.state.proteinCalories,
+                    fatAmount: this.state.fatAmount,
                     fatCalories: this.state.fatCalories,
-                    proteinAmount: this.state.proteinAmount
+                    proteinAmount: this.state.proteinAmount,
+                    carbCalories: this.state.carbCalories
                 }}>
 
                 <Input type="text" name="height" value={this.state.height} onChange={this.setInputMetrics}/>
@@ -114,7 +123,20 @@ export default class InputContainer extends Component {
                         name="protein"
                         value={this.state.proteinAmount}
                         onChange={this.handleProteinAmount}>
-                    <option key={0.7} value={0.7} defaultValue={0.7}>0.7</option>
+                    <option key={0.7} value={0.7}>0.7</option>
+                    <option key={0.8} value={0.8}>0.8</option>
+                    <option key={0.9} value={0.9}>0.9</option>
+                    <option key={1.0} value={1.0}>1.0</option>
+                </select>
+                <div>Fat Amount from lowest to highest: {this.state.fatAmount}</div>
+                <select type="select"
+                        name="fat"
+                        value={this.state.fatAmount}
+                        onChange={this.handleFatAmount}>
+                    <option key={0.4} value={0.4} defaultValue={0.4}>0.4</option>
+                    <option key={0.5} value={0.5}>0.5</option>
+                    <option key={0.6} value={0.6}>0.6</option>
+                    <option key={0.7} value={0.7}>0.7</option>
                     <option key={0.8} value={0.8}>0.8</option>
                     <option key={0.9} value={0.9}>0.9</option>
                     <option key={1.0} value={1.0}>1.0</option>
